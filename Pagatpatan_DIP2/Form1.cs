@@ -55,10 +55,22 @@ namespace Pagatpatan_DIP2
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image Files|*.png;*.jpg;*.jpeg;*.bmp";
+
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                greenScreenImage = new Bitmap(openFileDialog.FileName);
-                ResizeImageToFitPictureBox(greenScreenImage, pictureBox1);
+                try
+                {
+                    // Attempt to load the image to verify if it's a valid image file
+                    using (Image img = Image.FromFile(openFileDialog.FileName))
+                    {
+                        greenScreenImage = new Bitmap(img);
+                        ResizeImageToFitPictureBox(greenScreenImage, pictureBox1);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error loading the image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -66,12 +78,25 @@ namespace Pagatpatan_DIP2
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image Files|*.png;*.jpg;*.jpeg;*.bmp";
+
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                backgroundImage = new Bitmap(openFileDialog.FileName);
-                ResizeImageToFitPictureBox(backgroundImage, pictureBox2);
+                try
+                {
+                    // Attempt to load the image to verify if it's a valid image file
+                    using (Image img = Image.FromFile(openFileDialog.FileName))
+                    {
+                        backgroundImage = new Bitmap(img);
+                        ResizeImageToFitPictureBox(backgroundImage, pictureBox2);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error loading the image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
+
 
         private void btnSubtract_Click(object sender, EventArgs e)
         {
